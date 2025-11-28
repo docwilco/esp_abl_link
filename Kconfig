@@ -1,0 +1,15 @@
+menu "Ableton Link"
+
+    config LINK_ESP_EVENT_DRIVEN
+        bool "Use event-driven I/O instead of polling"
+        default y
+        help
+            When enabled, Link uses ASIO's blocking run() which waits for socket
+            events via lwIP's select(). This is more CPU efficient as the task
+            sleeps when there's no network activity.
+
+            When disabled, Link uses a timer-based polling approach that wakes
+            the task periodically (every 1ms) to check for events. This is the
+            original approach and is known to work, but wastes CPU cycles.
+
+endmenu
