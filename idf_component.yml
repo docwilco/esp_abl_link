@@ -1,2 +1,14 @@
 version: "0.1.0"
-description: "Ableton Link FFI wrapper for ESP32"
+description: "ESP-IDF component for Ableton Link's C wrapper"
+dependencies:
+  asio: ~=1.32.0
+url: "https://github.com/docwilco/esp_ableton_link/"
+repository: "https://github.com/docwilco/esp_ableton_link.git"
+license: "GPL-2.0-or-later"
+maintainers:
+  - DocWilco <espressif@drwil.co>
+tags:
+  - "ableton"
+  - "link"
+  - "audio"
+  - "sync"

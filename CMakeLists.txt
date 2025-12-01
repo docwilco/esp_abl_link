@@ -15,15 +15,10 @@ target_include_directories(${COMPONENT_LIB} PRIVATE
 )
 
 # ESP_PLATFORM is automatically defined by ESP-IDF, which Link uses to detect ESP32
-# No need for LINK_PLATFORM_LINUX - Link has native ESP32 support
 
 # Define required ESP32 platform configuration for Ableton Link
 # LINK_ESP_TASK_CORE_ID: Which core to run Link tasks on (0 or 1, use 1 to avoid WiFi core)
-# LINK_ESP_EVENT_DRIVEN: Use blocking ASIO run() instead of polling (more efficient)
 set(LINK_COMPILE_DEFS LINK_ESP_TASK_CORE_ID=1)
-if(CONFIG_LINK_ESP_EVENT_DRIVEN)
-    list(APPEND LINK_COMPILE_DEFS LINK_ESP_EVENT_DRIVEN)
-endif()
 target_compile_definitions(${COMPONENT_LIB} PRIVATE ${LINK_COMPILE_DEFS})
 
 # Suppress return-type warnings for Link code (ASIO_NO_EXCEPTIONS causes unreachable code paths)
