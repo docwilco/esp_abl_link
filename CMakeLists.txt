@@ -2,7 +2,7 @@ idf_component_register(
     SRCS "vendor/ableton-link/extensions/abl_link/src/abl_link.cpp"
     INCLUDE_DIRS "vendor/ableton-link/extensions/abl_link/include"
     REQUIRES asio
-    PRIV_REQUIRES sock_utils esp_timer esp_netif esp_driver_gptimer 
+    PRIV_REQUIRES sock_utils esp_timer esp_netif 
 )
 
 # C++11 is required for Ableton Link - use specific feature like the official example
