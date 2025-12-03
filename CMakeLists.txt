@@ -18,15 +18,14 @@ target_include_directories(${COMPONENT_LIB} PRIVATE
 
 # Define required ESP32 platform configuration for Ableton Link
 # LINK_ESP_TASK_CORE_ID: Which core to run Link tasks on (configurable via Kconfig)
-# On single-core chips or when Kconfig option is hidden, default to tskNO_AFFINITY
-if(CONFIG_LINK_ESP_TASK_CORE_0)
-    set(LINK_ESP_TASK_CORE_ID 0)
-elseif(CONFIG_LINK_ESP_TASK_CORE_1)
-    set(LINK_ESP_TASK_CORE_ID 1)
-elseif(CONFIG_LINK_ESP_TASK_CORE_2)
-    set(LINK_ESP_TASK_CORE_ID 2)
-elseif(CONFIG_LINK_ESP_TASK_CORE_3)
-    set(LINK_ESP_TASK_CORE_ID 3)
+# -1 means tskNO_AFFINITY, 0/1 for specific cores
+# When FREERTOS_UNICORE is enabled, the Kconfig option is hidden, so we default to tskNO_AFFINITY
+if(DEFINED CONFIG_LINK_ESP_TASK_CORE_ID)
+    if(CONFIG_LINK_ESP_TASK_CORE_ID EQUAL -1)
+        set(LINK_ESP_TASK_CORE_ID tskNO_AFFINITY)
+    else()
+        set(LINK_ESP_TASK_CORE_ID ${CONFIG_LINK_ESP_TASK_CORE_ID})
+    endif()
 else()
     set(LINK_ESP_TASK_CORE_ID tskNO_AFFINITY)
 endif()

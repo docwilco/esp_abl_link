@@ -1,4 +1,4 @@
-# esp_ableton_link
+# esp_abl_link
 
 An ESP-IDF component that provides [Ableton Link](https://github.com/Ableton/link) synchronization for ESP32 devices, using Link's official C wrapper (`abl_link`).
 
@@ -13,7 +13,7 @@ Ableton Link is a technology that synchronizes musical beat, tempo, and phase ac
 Add the component to your project:
 
 ```bash
-idf.py add-dependency "docwilco/esp_ableton_link"
+idf.py add-dependency "docwilco/esp_abl_link"
 ```
 
 ### Manual Installation
@@ -22,13 +22,13 @@ idf.py add-dependency "docwilco/esp_ableton_link"
 
    ```bash
    cd your_project/components
-   git clone --recursive https://github.com/docwilco/esp_ableton_link.git
+   git clone --recursive https://github.com/docwilco/esp_abl_link.git
    ```
 
 2. If you forgot `--recursive`, initialize the submodule:
 
    ```bash
-   cd esp_ableton_link
+   cd esp_abl_link
    git submodule update --init --recursive
    ```
 
@@ -36,6 +36,24 @@ idf.py add-dependency "docwilco/esp_ableton_link"
 
 - ESP-IDF v5.x
 - [asio](https://components.espressif.com/components/espressif/asio) component (~1.32.0)
+
+## Configuration
+
+This component provide a Kconfig option accessible via `idf.py menuconfig` under `Component config` > `Ableton Link`:
+
+### `CONFIG_LINK_ESP_TASK_CORE_ID`
+
+Selects which CPU core to run Link tasks on (only available when `FREERTOS_UNICORE` is disabled):
+
+| Value | Description |
+|-------|-------------|
+| `-1`  | No affinity (`tskNO_AFFINITY`) - FreeRTOS schedules on any core (default) |
+| `0`   | Core 0 - Note that WiFi also runs on core 0, which may cause contention |
+| `1`   | Core 1 - Recommended to avoid contention with WiFi |
+
+See also: [ESP-IDF FreeRTOS Task Creation](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/system/freertos_idf.html#creation)
+
+There is a second `link` task created, but it runs with `tskIDLE_PRIORITY`, so it does not need core affinity configuration.
 
 ## Usage
 

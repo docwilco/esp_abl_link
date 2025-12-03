@@ -1,46 +1,17 @@
 menu "Ableton Link"
 
-    choice LINK_ESP_TASK_CORE_ID
-        prompt "Link task core affinity"
-        depends on SOC_CPU_CORES_NUM > 1 && !FREERTOS_UNICORE
-        default LINK_ESP_TASK_CORE_NO_AFFINITY
+    config LINK_ESP_TASK_CORE_ID
+        int "Link task core affinity"
+        depends on !FREERTOS_UNICORE
+        range -1 1
+        default -1
         help
             Select which CPU core to run Link tasks on.
 
-            This option is only available on multi-core chips and when
-            FREERTOS_UNICORE is not enabled. On single-core chips, tasks
-            will always run on the only available core.
+            -1: No affinity (tskNO_AFFINITY) - FreeRTOS schedules on any core
+             0: Core 0 - Note that WiFi also runs on core 0, which may cause contention
+             1: Core 1 - Recommended to avoid contention with WiFi
 
-        config LINK_ESP_TASK_CORE_NO_AFFINITY
-            bool "No affinity (tskNO_AFFINITY)"
-            help
-                Allow FreeRTOS to schedule Link tasks on any available core.
-
-        config LINK_ESP_TASK_CORE_0
-            bool "Core 0"
-            help
-                Run Link tasks on core 0. Note that WiFi also runs on core 0,
-                which may cause contention.
-
-        config LINK_ESP_TASK_CORE_1
-            bool "Core 1"
-            depends on SOC_CPU_CORES_NUM > 1
-            help
-                Run Link tasks on core 1. This avoids contention with WiFi
-                which runs on core 0.
-
-        config LINK_ESP_TASK_CORE_2
-            bool "Core 2"
-            depends on SOC_CPU_CORES_NUM > 2
-            help
-                Run Link tasks on core 2.
-
-        config LINK_ESP_TASK_CORE_3
-            bool "Core 3"
-            depends on SOC_CPU_CORES_NUM > 3
-            help
-                Run Link tasks on core 3.
-
-    endchoice
+            This option is only available when FREERTOS_UNICORE is not enabled.
 
 endmenu

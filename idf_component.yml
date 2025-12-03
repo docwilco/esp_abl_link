@@ -1,14 +1,16 @@
 version: "0.1.0"
 description: "ESP-IDF component for Ableton Link's C wrapper"
 dependencies:
-  asio: ~=1.32.0
-registry_url: https://components.espressif.com
+  idf: ">=5.0"
+  asio:
+    version: ">=1.32.0"
+    registry_url: https://components.espressif.com
 targets:
   - esp32
   - esp32s2
   - esp32s3
-url: "https://github.com/docwilco/esp_ableton_link/"
-repository: "https://github.com/docwilco/esp_ableton_link.git"
+url: "https://github.com/docwilco/esp_abl_link/"
+repository: "https://github.com/docwilco/esp_abl_link.git"
 license: "GPL-2.0-or-later"
 maintainers:
   - DocWilco <espressif@drwil.co>
