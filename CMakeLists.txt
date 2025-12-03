@@ -17,9 +17,20 @@ target_include_directories(${COMPONENT_LIB} PRIVATE
 # ESP_PLATFORM is automatically defined by ESP-IDF, which Link uses to detect ESP32
 
 # Define required ESP32 platform configuration for Ableton Link
-# LINK_ESP_TASK_CORE_ID: Which core to run Link tasks on (0 or 1, use 1 to avoid WiFi core)
-set(LINK_COMPILE_DEFS LINK_ESP_TASK_CORE_ID=1)
-target_compile_definitions(${COMPONENT_LIB} PRIVATE ${LINK_COMPILE_DEFS})
+# LINK_ESP_TASK_CORE_ID: Which core to run Link tasks on (configurable via Kconfig)
+# On single-core chips or when Kconfig option is hidden, default to tskNO_AFFINITY
+if(CONFIG_LINK_ESP_TASK_CORE_0)
+    set(LINK_ESP_TASK_CORE_ID 0)
+elseif(CONFIG_LINK_ESP_TASK_CORE_1)
+    set(LINK_ESP_TASK_CORE_ID 1)
+elseif(CONFIG_LINK_ESP_TASK_CORE_2)
+    set(LINK_ESP_TASK_CORE_ID 2)
+elseif(CONFIG_LINK_ESP_TASK_CORE_3)
+    set(LINK_ESP_TASK_CORE_ID 3)
+else()
+    set(LINK_ESP_TASK_CORE_ID tskNO_AFFINITY)
+endif()
+target_compile_definitions(${COMPONENT_LIB} PRIVATE LINK_ESP_TASK_CORE_ID=${LINK_ESP_TASK_CORE_ID})
 
 # Suppress return-type warnings for Link code (ASIO_NO_EXCEPTIONS causes unreachable code paths)
 # Link doesn't fully support no-exceptions mode
@@ -34,3 +45,10 @@ target_compile_options(${COMPONENT_LIB} PRIVATE
 # one pass, symbols needed by stdc++ are not found. Adding "c" here ensures libc
 # appears again AFTER stdc++ in the link line.
 target_link_libraries(${COMPONENT_LIB} PRIVATE c)
+
+# Link atomic library for RISC-V targets (ESP32-C3, C6, H2, etc.) which need runtime
+# support for 64-bit atomic operations like __atomic_is_lock_free.
+# Xtensa targets (ESP32, ESP32-S2, ESP32-S3) don't need this.
+if(CONFIG_IDF_TARGET_ARCH_RISCV)
+    target_link_libraries(${COMPONENT_LIB} PRIVATE atomic)
+endif()

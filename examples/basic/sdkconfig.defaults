@@ -1,0 +1,5 @@
+# Required for Ableton Link - ASIO needs C++ exceptions enabled
+CONFIG_COMPILER_CXX_EXCEPTIONS=y
+
+# Use larger partition table (1.5MB app instead of 1MB)
+CONFIG_PARTITION_TABLE_SINGLE_APP_LARGE=y

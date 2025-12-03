@@ -1,0 +1,8 @@
+dependencies:
+  esp_ableton_link:
+    version: "*"
+    path: "../../.."
+  idf:
+    version: ">=5.0"
+  protocol_examples_common:
+    path: "${IDF_PATH}/examples/common_components/protocol_examples_common"
