@@ -2,20 +2,6 @@
 
 An ESP-IDF component that provides [Ableton Link](https://github.com/Ableton/link) synchronization for ESP32 devices, using Link's official C wrapper (`abl_link`).
 
-## Versioning
-
-This component's version tracks the bundled Ableton Link version using the [ESP-IDF revision field](https://docs.espressif.com/projects/idf-component-manager/en/latest/reference/versioning.html):
-
-- **Major.Minor.Patch**: Matches the Ableton Link version
-- **~N**: Component revision for downstream-only changes
-
-For example:
-| Component Version | Ableton Link Version | Notes |
-|-------------------|----------------------|-------|
-| 3.1.5 | Link 3.1.5 | Initial release with Link 3.1.5 |
-| 3.1.5~1 | Link 3.1.5 | Component-only fix |
-| 3.1.6 | Link 3.1.6 | Updated to Link 3.1.6 |
-
 ## Overview
 
 Ableton Link is a technology that synchronizes musical beat, tempo, and phase across multiple applications and devices connected on the same network. This component allows ESP32 devices to participate in Link sessions alongside desktop applications (like Ableton Live), mobile apps, and other Link-enabled hardware.
@@ -45,6 +31,20 @@ idf.py add-dependency "docwilco/esp_abl_link"
    cd esp_abl_link
    git submodule update --init --recursive
    ```
+
+## Versioning
+
+This component's version tracks the bundled Ableton Link version using the [ESP-IDF revision field](https://docs.espressif.com/projects/idf-component-manager/en/latest/reference/versioning.html):
+
+- **Major.Minor.Patch**: Matches the Ableton Link version
+- **~N**: Component revision for downstream-only changes
+
+For example:
+| Component Version | Ableton Link Version | Notes |
+|-------------------|----------------------|-------|
+| 3.1.5 | Link 3.1.5 | Initial release with Link 3.1.5 |
+| 3.1.5~1 | Link 3.1.5 | Component-only fix |
+| 3.1.6 | Link 3.1.6 | Updated to Link 3.1.6 |
 
 ## Dependencies
 
