@@ -1,5 +1,9 @@
-version: "0.1.0"
-description: "ESP-IDF component for Ableton Link's C wrapper"
+version: "3.1.5"
+description: |
+  ESP-IDF component for Ableton Link's C wrapper.
+  
+  Versioning: Major.Minor.Patch matches Ableton Link, ~N is the component revision.
+  E.g., 3.1.5 is the initial release with Link 3.1.5, 3.1.5~1 is a component-only fix.
 dependencies:
   idf: ">=5.0"
   asio:
