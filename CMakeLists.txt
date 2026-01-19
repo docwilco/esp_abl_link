@@ -39,11 +39,11 @@ target_compile_options(${COMPONENT_LIB} PRIVATE
     -fexceptions
 )
 
-# Fix link order issue: libstdc++ needs libc symbols (wctype, wcslen, strtof, etc.)
-# but in ESP-IDF+Rust builds, -lc comes BEFORE -lstdc++. Since the linker only makes
-# one pass, symbols needed by stdc++ are not found. Adding "c" here ensures libc
-# appears again AFTER stdc++ in the link line.
-target_link_libraries(${COMPONENT_LIB} PRIVATE c)
+# ESP-IDF component manager can sometimes mess up the link order when multiple components
+# are involved. To fix link errors caused by that, we use --start-group/--end-group around
+# standard libraries to make sure all symbols are resolved correctly.
+target_link_libraries(${COMPONENT_LIB} INTERFACE 
+    "-Wl,--start-group" "-lstdc++" "-lc" "-Wl,--end-group")
 
 # Link atomic library for RISC-V targets (ESP32-C3, C6, H2, etc.) which need runtime
 # support for 64-bit atomic operations like __atomic_is_lock_free.

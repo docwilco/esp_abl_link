@@ -1,3 +1,5 @@
+![Component badge](https://components.espressif.com/components/docwilco/esp_abl_link/badge.svg)
+
 # esp_abl_link
 
 An ESP-IDF component that provides [Ableton Link](https://github.com/Ableton/link) synchronization for ESP32 devices, using Link's official C wrapper (`abl_link`).
