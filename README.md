@@ -57,7 +57,7 @@ This component's version tracks the bundled Ableton Link version using the [ESP-
 - ESP32-H2
 - ESP32-P4
 
-Ableton Link relies on lock-free atomic operations (64-bit). Only the dual-core targets have that support, so this component is not compatible with single-core targets like ESP32-C3. Considering timing is critical for Link, and the WiFi task runs with extremely high priority, it is recommended to use dual-core targets for reliable performance.
+Ableton Link relies on lock-free atomic operations. Only the dual-core targets have that support, so this component is not compatible with single-core targets like the ESP32-S2 or ESP32-C3. Considering timing is critical for Link, and the WiFi task runs with extremely high priority, it is recommended to use dual-core targets for reliable performance.
 
 ## Configuration
 
