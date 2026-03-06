@@ -41,17 +41,23 @@ This component's version tracks the bundled Ableton Link version using the [ESP-
 - **Major.Minor.Patch**: Matches the Ableton Link version
 - **~N**: Component revision for downstream-only changes
 
-For example:
-| Component Version | Ableton Link Version | Notes |
-|-------------------|----------------------|-------|
-| 3.1.5 | Link 3.1.5 | Initial release with Link 3.1.5 |
-| 3.1.5~1 | Link 3.1.5 | Component-only fix |
-| 3.1.6 | Link 3.1.6 | Updated to Link 3.1.6 |
 
 ## Dependencies
 
-- ESP-IDF v5.x
-- [asio](https://components.espressif.com/components/espressif/asio) component (~1.32.0)
+- ESP-IDF >= v5.3
+- [asio](https://components.espressif.com/components/espressif/asio) component (>=1.32.0)
+
+## Supported Targets
+
+- ESP32
+- ESP32-S3
+- ESP32-C5 (IDF >= 5.5)
+- ESP32-C6
+- ESP32-C61 (IDF >= 5.5)
+- ESP32-H2
+- ESP32-P4
+
+Ableton Link relies on lock-free atomic operations (64-bit). Only the dual-core targets have that support, so this component is not compatible with single-core targets like ESP32-C3. Considering timing is critical for Link, and the WiFi task runs with extremely high priority, it is recommended to use dual-core targets for reliable performance.
 
 ## Configuration
 

@@ -8,3 +8,5 @@ managed_components/
 sdkconfig
 sdkconfig.old
 dependencies.lock
+
+copilot_build*.log
