@@ -1,5 +1,6 @@
 idf_component_register(
     SRCS "vendor/ableton-link/extensions/abl_link/src/abl_link.cpp"
+         "src/if_index_compat.c"
     INCLUDE_DIRS "vendor/ableton-link/extensions/abl_link/include"
     REQUIRES asio
     PRIV_REQUIRES sock_utils esp_timer esp_netif 
@@ -37,17 +38,14 @@ target_compile_definitions(${COMPONENT_LIB} PRIVATE LINK_ESP_TASK_CORE_ID=${LINK
 target_compile_options(${COMPONENT_LIB} PRIVATE
     -Wno-return-type
     -fexceptions
+    # Link uses multi-character constants ('__ht', 'tmln', etc.) as protocol message tags.
+    # This is implementation-defined, but Link guards against byte-order surprises with
+    # static_assert checks. ESP-IDF v6.0 promotes -Wmultichar to -Werror.
+    -Wno-multichar
 )
 
 # ESP-IDF component manager can sometimes mess up the link order when multiple components
 # are involved. To fix link errors caused by that, we use --start-group/--end-group around
 # standard libraries to make sure all symbols are resolved correctly.
-target_link_libraries(${COMPONENT_LIB} INTERFACE 
+target_link_libraries(${COMPONENT_LIB} INTERFACE
     "-Wl,--start-group" "-lstdc++" "-lc" "-Wl,--end-group")
-
-# Link atomic library for RISC-V targets (ESP32-C3, C6, H2, etc.) which need runtime
-# support for 64-bit atomic operations like __atomic_is_lock_free.
-# Xtensa targets (ESP32, ESP32-S2, ESP32-S3) don't need this.
-if(CONFIG_IDF_TARGET_ARCH_RISCV)
-    target_link_libraries(${COMPONENT_LIB} PRIVATE atomic)
-endif()
