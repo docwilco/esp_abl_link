@@ -51,8 +51,8 @@ static const char *TAG = "link_example";
 #define QUANTUM 4.0
 
 typedef struct {
-    abl_link link;
-    abl_link_session_state session_state;
+    struct abl_link link;
+    struct abl_link_session_state session_state;
 } link_state_t;
 
 static void print_task(void *user_param)
